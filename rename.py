@@ -17,12 +17,13 @@ def renameSeason(season, args):
 def main():
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument("--path")
-	parser.add_argument("--ext")
+	parser.add_argument("--ext", default='.mkv')
 	parser.add_argument("--name")
 	parser.add_argument("--season", required=False)
 	parser.add_argument("--season_name", 
 		help="Used to loop over all seasons. Give season name w/o number to use",
 		default=None)
+	parser.add_argument('--season_num_start', default=1, type=int)
 	parser.add_argument("--num_seasons", type=int)
 	args = parser.parse_args()
 
@@ -37,7 +38,7 @@ def main():
 	if not args.season_name:
 		renameSeason(season)
 	else:
-		for i in range(1, args.num_seasons+1):
+		for i in range(args.season_num_start, args.season_num_start + args.num_seasons):
 			os.chdir(args.season_name + str(i))
 			renameSeason(i, args)
 			os.chdir("../")
